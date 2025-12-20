@@ -1,0 +1,6 @@
+[submodule "LI/vendor/spdlog"]
+	path = LI/vendor/spdlog
+	url = https://github.com/gabime/spdlog
+[submodule "LI/vendor/GLFW"]
+	path = LI/vendor/GLFW
+	url = https://github.com/TheCherno/glfw

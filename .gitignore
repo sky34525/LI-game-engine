@@ -1,0 +1,25 @@
+# Build outputs
+bin/
+bin-int/
+
+# Visual Studio
+.vs/
+*.user
+*.vcxproj.user
+*.suo
+*.sln.docstates
+
+# Visual Studio generated files
+*.vcxproj
+*.vcxproj.filters
+*.sln
+
+# Premake generated files
+Makefile
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
