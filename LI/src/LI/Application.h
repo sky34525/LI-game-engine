@@ -14,7 +14,7 @@ namespace LI
 
 	class LI_API Application {
 	public:
-		Application();
+
 		virtual ~Application();
 		void Run();
 
@@ -22,12 +22,19 @@ namespace LI
 
 		void PushLayer(std::unique_ptr<Layer> layer);
 		void PushOverlay(std::unique_ptr<Layer> layer);
+
+		inline static Application& Get() { return *s_Instance; }
+		inline Window& GetWindow() { return *m_Window; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> m_Window;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
+	protected:
+		Application();
+	private:
+		static Application* s_Instance;
 	};
 
 	Application* CreateApplication();

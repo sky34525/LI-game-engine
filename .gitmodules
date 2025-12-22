@@ -4,3 +4,6 @@
 [submodule "LI/vendor/GLFW"]
 	path = LI/vendor/GLFW
 	url = https://github.com/TheCherno/glfw
+[submodule "LI/vendor/imgui"]
+	path = LI/vendor/imgui
+	url = https://github.com/sky34525/imgui

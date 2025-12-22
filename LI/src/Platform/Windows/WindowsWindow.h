@@ -19,7 +19,7 @@ namespace LI {
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
 
-		virtual void* GetNativeWindow() const { return m_Window; }
+		void* GetNativeWindow() const override { return m_Window; }
 
 
 	private:

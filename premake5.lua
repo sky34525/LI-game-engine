@@ -12,8 +12,14 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
 IncludeDir["GLFW"] = "LI/vendor/GLFW/include"
+IncludeDir["Glad"] = "LI/vendor/Glad/include"
+IncludeDir["imGui"] = "LI/vendor/imgui"
+IncludeDir["imGuiBackends"] = "LI/vendor/imgui/backends"
+
 
 include "LI/vendor/GLFW"
+include "LI/vendor/Glad"
+include "LI/vendor/imgui"
 
 project "LI"
 	location "LI"
@@ -38,24 +44,30 @@ project "LI"
 	{
 		"%{prj.name}/vendor/spdlog/include",
 		"%{prj.name}/src",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.imGui}",
+		"%{IncludeDir.imGuiBackends}"
 	}
 
 	links
 	{
 		"GLFW",
-		"opengl32.lib"
+		"Glad",
+		"opengl32.lib",
+		"ImGui"
 	}
 
 	filter "system:windows"
 		cppdialect "C++17"
 		staticruntime "on"
-		systemversion "10.0.26100.0"
+		systemversion "latest"
 
 		defines
 		{
 			"LI_PLATFORM_WINDOWS",
-			"LI_BUILD_DLL"
+			"LI_BUILD_DLL",
+			"GLFW_INCLUDE_NONE"
 		}
 
         buildoptions
@@ -111,7 +123,7 @@ project "Sandbox"
 	filter "system:windows"
 		cppdialect "C++17"
 		staticruntime "on"
-		systemversion "10.0.26100.0"
+		systemversion "latest"
 
 		defines
 		{
