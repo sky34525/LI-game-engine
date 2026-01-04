@@ -6,7 +6,7 @@
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
 #include "Window.h"
-
+#include "LI/ImGui/ImGuiLayer.h"
 
 namespace LI
 {
@@ -22,6 +22,7 @@ namespace LI
 
 		void PushLayer(std::unique_ptr<Layer> layer);
 		void PushOverlay(std::unique_ptr<Layer> layer);
+		std::unique_ptr<Layer> PopLayer();
 
 		inline static Application& Get() { return *s_Instance; }
 		inline Window& GetWindow() { return *m_Window; }
@@ -29,6 +30,7 @@ namespace LI
 		bool OnWindowClose(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 	protected:

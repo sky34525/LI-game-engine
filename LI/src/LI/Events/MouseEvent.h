@@ -32,8 +32,8 @@ namespace LI {
 		MouseScrolledEvent(float xoffset, float yoffset)
 			: m_Xoffset(xoffset), m_Yoffset(yoffset) { }
 
-		inline float GetXoffset() const { return m_Xoffset; }
-		inline float GetYoffset() const { return m_Yoffset; }
+		inline float GetXOffset() const { return m_Xoffset; }
+		inline float GetYOffset() const { return m_Yoffset; }
 
 		std::string ToString() const override
 		{

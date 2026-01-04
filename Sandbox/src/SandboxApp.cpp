@@ -10,11 +10,19 @@ public:
 
 	void OnUpdate() override
 	{
-
+		if (LI::Input::IsKeyPressed(HZ_KEY_TAB))
+			LI_TRACE("Tab key is pressed (poll)!");
 	}
 
 	void OnEvent(LI::Event& event) override
 	{
+		if (event.GetEventType() == LI::EventType::KeyPressed)
+		{			
+			LI::KeyPressedEvent& e = (LI::KeyPressedEvent&)event;
+			if (e.GetKeyCode() == HZ_KEY_TAB)
+				LI_TRACE("Tab key is pressed (event)!");
+			LI_TRACE("{0}", (char)e.GetKeyCode());
+		}
 	}
 };
 
@@ -24,7 +32,6 @@ class SandboxApp : public LI::Application
 	SandboxApp() 
 	{
 		PushLayer(std::make_unique<ExampleLayer>());
-		PushOverlay(std::make_unique<LI::ImGuiLayer>());
 	}
 	~SandboxApp() {}
 };

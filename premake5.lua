@@ -14,17 +14,22 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "LI/vendor/GLFW/include"
 IncludeDir["Glad"] = "LI/vendor/Glad/include"
 IncludeDir["imGui"] = "LI/vendor/imgui"
-IncludeDir["imGuiBackends"] = "LI/vendor/imgui/backends"
+IncludeDir["glm"] = "LI/vendor/glm"
 
+startproject "Sandbox"
 
-include "LI/vendor/GLFW"
-include "LI/vendor/Glad"
-include "LI/vendor/imgui"
+group "Dependencies"
+	include "LI/vendor/GLFW"
+	include "LI/vendor/Glad"
+	include "LI/vendor/imgui"
+
+group ""
 
 project "LI"
 	location "LI"
 	kind "SharedLib"
 	language "C++"
+	staticruntime "off"
 
 	pchheader "pch.h"
 	pchsource "LI/src/pch.cpp"
@@ -37,7 +42,9 @@ project "LI"
 	files
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.inl"
 	}
 
 	includedirs
@@ -47,7 +54,7 @@ project "LI"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.imGui}",
-		"%{IncludeDir.imGuiBackends}"
+		"%{IncludeDir.glm}"
 	}
 
 	links
@@ -60,7 +67,7 @@ project "LI"
 
 	filter "system:windows"
 		cppdialect "C++17"
-		staticruntime "on"
+
 		systemversion "latest"
 
 		defines
@@ -82,23 +89,24 @@ project "LI"
 
 	filter "configurations:Debug"
 		defines "LI_DEBUG"
-		buildoptions "/MDd"
+		runtime "Debug"
 		symbols "on"
 
 	filter "configurations:Release"
 		defines "LI_RELEASE"
-		buildoptions "/MD"
+		runtime "Release"
 		symbols "on"
 
 	filter "configurations:Dist"
 		defines "LI_DIST"
-		buildoptions "/MD"
+		runtime "Release"
 		symbols "on"
 
 project "Sandbox"
 	location "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
+	staticruntime "off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -112,7 +120,8 @@ project "Sandbox"
 	includedirs
 	{
 		"LI/vendor/spdlog/include",
-		"LI/src"
+		"LI/src",
+		"%{IncludeDir.glm}"
 	}
 
 	links
@@ -137,15 +146,15 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines "LI_DEBUG"
-		buildoptions "/MDd"
+		runtime "Debug"
 		symbols "on"
 
 	filter "configurations:Release"
 		defines "LI_RELEASE"
-		buildoptions "/MD"
+		runtime "Release"
 		symbols "on"
 
 	filter "configurations:Dist"
 		defines "LI_DIST"
-		buildoptions "/MD"
+		runtime "Release"
 		symbols "on"

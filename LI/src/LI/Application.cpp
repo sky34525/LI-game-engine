@@ -1,7 +1,7 @@
 ﻿ #include "pch.h"
 #include "Application.h"
 #include "log.h"
-
+#include "Input.h"
 
 
 namespace LI{
@@ -16,7 +16,11 @@ namespace LI{
 		s_Instance = this;
 
 		m_Window = std::unique_ptr<Window>(Window::Create());
-		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent)); 
+		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+
+		auto imGuiLayer = std::make_unique<ImGuiLayer>();
+		m_ImGuiLayer = imGuiLayer.get();
+		PushOverlay(std::move(imGuiLayer));
 
 	}
 	Application::~Application()
@@ -31,6 +35,7 @@ namespace LI{
 	}
 	void Application::PushOverlay(std::unique_ptr<Layer> layer)
 	{
+		layer->OnAttach();
 		m_LayerStack.PushOverlay(move(layer));
 	}
 
@@ -57,6 +62,10 @@ namespace LI{
 			{
 				layer->OnUpdate();
 			}
+			m_ImGuiLayer->Begin();
+			for (auto& layer : m_LayerStack)
+				layer->OnImGuiRender();
+			m_ImGuiLayer->End();
 			m_Window->OnUpdate();
 		};
 	}
