@@ -6,6 +6,7 @@
 #include "backends/imgui_impl_glfw.h"
 
 #include "LI/Application.h"
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 namespace LI {
@@ -62,6 +63,9 @@ namespace LI {
 
 	void ImGuiLayer::Begin()
 	{
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();

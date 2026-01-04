@@ -79,21 +79,7 @@ imGuiLayer的事件实现需要调用glfw实现，通过imGuiBuild.cpp来实现�
 
 
 
-TODO:
-
-Platform中的Opengl需要重写，将
-
-\#include <misc/cpp/imgui\_stdlib.cpp>
-
-
-
-\#define IMGUI\_IMPL\_OPENGL\_LOADER\_GLAD
-
-\#include <examples/imgui\_impl\_opengl3.cpp>
-
-包含在ImGuiBuild.cpp中
-
-
-
+TODO：
+ImGui拖动bug（可能是ImGui版本原因，可更换到老版本尝试）或者移除循环  //已解决：未清除渲染缓冲区
 
 
