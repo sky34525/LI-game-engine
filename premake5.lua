@@ -121,6 +121,7 @@ project "Sandbox"
 	{
 		"LI/vendor/spdlog/include",
 		"LI/src",
+		"LI/vendor",
 		"%{IncludeDir.glm}"
 	}
 

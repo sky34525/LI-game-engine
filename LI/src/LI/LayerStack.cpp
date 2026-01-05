@@ -12,12 +12,14 @@ namespace LI {
 
 	void LayerStack::PushLayer(std::unique_ptr<Layer> layer)
 	{
+		layer->OnAttach();
 		m_Layers.emplace(m_Layers.begin() + m_LayerInsertIndex, std::move(layer));
 		m_LayerInsertIndex++;
 	}
 
 	void LayerStack::PushOverlay(std::unique_ptr<Layer> overlay)
 	{
+		overlay->OnAttach();
 		m_Layers.emplace_back(std::move(overlay));
 	}
 
@@ -28,6 +30,7 @@ namespace LI {
 			);
 		if (it != m_Layers.begin() + m_LayerInsertIndex)
 		{
+			(*it)->OnDetach();
 			auto result = std::move(*it);
 			m_Layers.erase(it);
 			m_LayerInsertIndex--;
@@ -43,6 +46,7 @@ namespace LI {
 		);
 		if (it != m_Layers.end())
 		{
+			(*it)->OnDetach();
 			auto result = std::move(*it);
 			m_Layers.erase(it);
 			return result;

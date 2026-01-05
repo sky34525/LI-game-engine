@@ -29,13 +29,11 @@ namespace LI{
 
 	void Application::PushLayer(std::unique_ptr<Layer> layer)
 	{
-		layer->OnAttach();
 		m_LayerStack.PushLayer(move(layer));
 
 	}
 	void Application::PushOverlay(std::unique_ptr<Layer> layer)
 	{
-		layer->OnAttach();
 		m_LayerStack.PushOverlay(move(layer));
 	}
 
