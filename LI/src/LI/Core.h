@@ -1,11 +1,15 @@
 ﻿#pragma once
 
 #ifdef LI_PLATFORM_WINDOWS
+#if LI_DYNAMIC_LINK
 	#ifdef LI_BUILD_DLL
 		#define LI_API __declspec(dllexport)
 	#else
 		#define LI_API __declspec(dllimport)
 	#endif
+#else
+	#define LI_API
+#endif
 #else
 	#error LI only supports Windows!
 #endif // LI_PLATFORM_WINDOWS
