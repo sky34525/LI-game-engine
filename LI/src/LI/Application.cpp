@@ -1,7 +1,10 @@
-﻿ #include "pch.h"
+﻿#include "pch.h"
 #include "Application.h"
 #include "log.h"
 #include "Input.h"
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 
 namespace LI{
@@ -56,6 +59,8 @@ namespace LI{
 	{
 		while (m_Running)
 		{
+			glClearColor(0.1f, 0.1f, 0.4f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT);
 			for (auto& layer : m_LayerStack)
 			{
 				layer->OnUpdate();
