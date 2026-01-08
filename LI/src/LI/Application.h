@@ -7,6 +7,8 @@
 #include "Events/ApplicationEvent.h"
 #include "Window.h"
 #include "LI/ImGui/ImGuiLayer.h"
+#include "LI/Renderer/Shader.h"
+#include "LI/Renderer/Buffer.h"
 
 namespace LI
 {
@@ -28,7 +30,7 @@ namespace LI
 		inline Window& GetWindow() { return *m_Window; }
 
 		//TODO
-		unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
+		unsigned int m_VertexArray;
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 
@@ -36,6 +38,10 @@ namespace LI
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
+		std::unique_ptr<Shader> m_Shader;
+		std::unique_ptr<VertexBuffer> m_VertexBuffer;
+		std::unique_ptr<IndexBuffer> m_IndexBuffer;
+
 	protected:
 		Application();
 	private:
