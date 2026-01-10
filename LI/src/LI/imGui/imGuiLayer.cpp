@@ -16,9 +16,7 @@ namespace LI {
 	{
 	}
 
-	ImGuiLayer::~ImGuiLayer()
-	{
-	}
+
 
 	void ImGuiLayer::OnAttach()
 	{

@@ -17,7 +17,7 @@ namespace LI
 	class LI_API Application {
 	public:
 
-		virtual ~Application();
+		virtual ~Application() = default;
 		void Run();
 
 		void OnEvent(Event& e);

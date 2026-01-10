@@ -8,8 +8,5 @@ namespace LI {
 
 	}
 
-	Layer::~Layer()
-	{
 
-	}
 }
