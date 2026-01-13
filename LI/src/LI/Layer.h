@@ -4,6 +4,7 @@
 #include "LI/Events/Event.h"
 
 namespace LI {
+
 	class LI_API Layer
 	{
 	public:

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 项目概述
 
-LI 是一个 C++ 游戏引擎项目,采用 DLL 架构设计。引擎核心编译为动态链接库(SharedLib),通过 Sandbox 测试应用程序进行开发和测试。
+LI 是一个 C++ 游戏引擎项目,采用静态库架构设计。引擎核心编译为静态库,通过 Sandbox 测试应用程序进行开发和测试。引擎使用平台抽象层设计,当前支持 Windows 平台和 OpenGL 渲染 API。
 
 ## 构建系统
 
@@ -33,17 +33,20 @@ LI 是一个 C++ 游戏引擎项目,采用 DLL 架构设计。引擎核心编译
 4. **输出目录结构**:
    - 二进制: `bin/{配置}-windows-x64/{项目名}/`
    - 中间文件: `bin-int/{配置}-windows-x64/{项目名}/`
-   - LI.dll 会自动复制到 Sandbox 输出目录
+
+5. **架构变更** (提交 462e8e4):
+   - 引擎核心已从 DLL 改为**静态库** (`kind "StaticLib"`)
+   - 不再需要 DLL 复制步骤,LI 直接链接到 Sandbox
 
 ## 核心架构
 
-### DLL 架构模式
+### 静态库架构模式
 
 引擎使用"入口点隐藏"模式实现引擎和客户端代码的解耦:
 
 - **引擎侧**: `main()` 函数在 `EntryPoint.h` 中实现,负责初始化日志系统、调用 `CreateApplication()` 并运行应用
 - **客户端侧**: 只需实现 `CreateApplication()` 工厂函数返回自定义 `Application` 子类实例
-- **符号导出**: 使用 `LI_API` 宏控制 DLL 符号的导出/导入 (Core.h:4-8)
+- **符号标记**: `LI_API` 宏仍用于标记引擎 API,但当前构建为静态库而非 DLL
 
 ### Layer 系统
 
@@ -127,6 +130,35 @@ void OnEvent(Event& e) {
 **最近修复** (提交 ec3c8db):
 修复了 ImGui 拖动残影问题,在 `Begin()` 中添加了渲染缓冲区清除。
 
+### 渲染系统
+
+**GraphicsContext 抽象** (LI/Renderer/GraphicsContext.h):
+- 平台无关的图形上下文接口,定义 `Init()` 和 `SwapBuffers()`
+- **OpenGLContext** 实现在 `Platform/OpenGL/OpenGLContext.cpp` 中
+- 从 WindowsWindow 中分离,初始化 GLAD 并管理 OpenGL 上下文
+
+**Renderer API 抽象** (LI/Renderer/Renderer.h):
+- 定义 `RendererAPI` 枚举(None, OpenGL)
+- 提供 `GetAPI()` 静态方法查询当前渲染 API
+
+**Buffer 抽象** (LI/Renderer/Buffer.h):
+- **VertexBuffer/IndexBuffer**: 平台无关的缓冲区接口
+- **BufferLayout**: 描述顶点属性布局(位置、颜色等)
+  - `BufferElement` 定义单个属性(类型、名称、偏移量、归一化)
+  - `ShaderDataType` 枚举支持 Float/Float2/Float3/Float4/Mat3/Mat4/Int/Bool
+  - 自动计算 Stride 和 Offset
+- **OpenGLBuffer**: OpenGL 实现在 `Platform/OpenGL/OpenGLBuffer.cpp`
+- 使用静态工厂方法 `Create()` 根据当前 API 创建具体实例
+
+**Shader 系统** (LI/Renderer/Shader.h):
+- 着色器编译、链接和使用的抽象
+- `Bind()/Unbind()` 管理着色器程序状态
+
+**架构设计原则**:
+- 平台抽象层通过纯虚接口定义 API (Renderer/ 目录)
+- 平台实现在 `Platform/{API}/` 目录 (如 Platform/OpenGL/)
+- 使用静态工厂模式根据 `Renderer::GetAPI()` 创建具体实例
+
 ### 日志系统
 
 基于 spdlog 库,分离核心日志和客户端日志:
@@ -187,6 +219,24 @@ Debug 配置下启用断言 (Core.h:13-23):
 ### 代码规范
 
 - 引擎核心代码使用 `LI_API` 宏标记导出的类和函数
-- 使用智能指针管理 Layer 生命周期 (`std::unique_ptr`)
+- 使用智能指针管理生命周期 (`std::unique_ptr` 用于 Layer、Buffer、Shader 等)
 - 事件处理使用 `LI_BIND_EVENT_FN` 宏绑定成员函数
 - 位掩码操作使用 `BIT(x)` 宏
+- 渲染资源使用裸指针返回(由调用者管理生命周期),未来可能改为智能指针
+
+### 添加新的平台实现
+
+1. 在 `LI/Renderer/` 中定义平台无关接口(纯虚类)
+2. 在 `Platform/{API}/` 中实现具体类(如 `OpenGLBuffer`)
+3. 在基类的 `Create()` 静态工厂方法中根据 `Renderer::GetAPI()` 返回实例:
+   ```cpp
+   VertexBuffer* VertexBuffer::Create(float* vertices, uint32_t size)
+   {
+       switch (Renderer::GetAPI())
+       {
+           case RendererAPI::OpenGL:
+               return new OpenGLVertexBuffer(vertices, size);
+       }
+       return nullptr;
+   }
+   ```
