@@ -1,3 +1,8 @@
+This to be inline with naming convention;
+s_ prefix for static fields;
+m_ prefix for member fields.
+
+
 Application
 
 单例类
@@ -77,9 +82,15 @@ imGuiLayer的事件实现需要调用glfw实现，通过imGuiBuild.cpp来实现�
 
 
 
+Renderer
+
+采用静态设计，所有成员都是静态的，静态成员SceneData存储场景数据。
+静态设计意味着整个程序共享一份渲染器和场景数据，多个Submit共享同一份SceneData
+
 
 
 TODO：
 ImGui拖动bug（可能是ImGui版本原因，可更换到老版本尝试）或者移除循环  //已解决：未清除渲染缓冲区
 
+Renderer类的作用是什么
 
