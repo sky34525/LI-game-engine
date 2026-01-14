@@ -11,6 +11,7 @@
 #include "LI/Renderer/Buffer.h"
 #include "LI/Renderer/VertexArray.h"
 #include "LI/Renderer/Renderer.h"
+#include "LI/Renderer/OrthographicCamera.h"
 
 namespace LI
 {

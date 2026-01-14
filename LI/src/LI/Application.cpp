@@ -27,7 +27,6 @@ namespace LI{
 
 	}
 
-
 	void Application::PushLayer(std::unique_ptr<Layer> layer)
 	{
 		m_LayerStack.PushLayer(move(layer));

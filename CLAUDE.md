@@ -154,6 +154,41 @@ void OnEvent(Event& e) {
 - 着色器编译、链接和使用的抽象
 - `Bind()/Unbind()` 管理着色器程序状态
 
+**VertexArray 抽象** (LI/Renderer/VertexArray.h):
+- 封装顶点数组对象 (VAO),管理顶点缓冲区和索引缓冲区的关联
+- `AddVertexBuffer(vertexBuffer)`: 添加顶点缓冲区并自动设置顶点属性
+- `SetIndexBuffer(indexBuffer)`: 设置索引缓冲区
+- **OpenGLVertexArray**: OpenGL 实现在 `Platform/OpenGL/OpenGLVertexArray.cpp`
+- **重要**: 必须先设置 VertexBuffer 的 Layout,然后调用 `AddVertexBuffer()`,才能正确配置顶点属性
+
+**RenderCommand 和渲染流程** (LI/Renderer/RenderCommand.h):
+- **RenderCommand**: 静态封装类,提供渲染命令的统一接口
+  - `SetClearColor()`: 设置清除颜色
+  - `Clear()`: 清除缓冲区
+  - `DrawIndexed(vertexArray)`: 使用索引缓冲区绘制
+- **RendererAPI**: 纯虚接口,定义平台无关的渲染 API
+- **OpenGLRendererAPI**: OpenGL 实现,映射到具体的 OpenGL 调用
+- 内部持有静态 `RendererAPI*` 实例,在 RenderCommand.cpp 中初始化
+
+**完整渲染流程**:
+```cpp
+// 1. 在 Layer::OnAttach() 中设置渲染资源
+m_VertexArray.reset(VertexArray::Create());
+m_VertexBuffer.reset(VertexBuffer::Create(vertices, size));
+m_VertexBuffer->SetLayout(layout);        // 必须先设置 Layout
+m_VertexArray->AddVertexBuffer(m_VertexBuffer);  // 然后添加到 VAO
+m_IndexBuffer.reset(IndexBuffer::Create(indices, count));
+m_VertexArray->SetIndexBuffer(m_IndexBuffer);    // 设置索引缓冲区
+
+// 2. 在 Layer::OnUpdate() 中渲染
+RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});
+RenderCommand::Clear();
+Renderer::BeginScene();
+m_Shader->Bind();
+Renderer::Submit(m_VertexArray);  // 内部调用 RenderCommand::DrawIndexed()
+Renderer::EndScene();
+```
+
 **架构设计原则**:
 - 平台抽象层通过纯虚接口定义 API (Renderer/ 目录)
 - 平台实现在 `Platform/{API}/` 目录 (如 Platform/OpenGL/)
@@ -240,3 +275,11 @@ Debug 配置下启用断言 (Core.h:13-23):
        return nullptr;
    }
    ```
+
+### 常见陷阱
+
+**渲染资源设置顺序问题**:
+- **错误**: 创建 VertexBuffer 和 IndexBuffer 后忘记添加到 VertexArray
+- **结果**: `GetIndexBuffer()` 返回 nullptr,导致访问权限冲突崩溃
+- **解决**: 确保按顺序调用 `AddVertexBuffer()` 和 `SetIndexBuffer()`
+- **位置**: 常见于 `Layer::OnAttach()` 中的渲染资源初始化代码
