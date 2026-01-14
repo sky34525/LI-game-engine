@@ -8,13 +8,13 @@
 namespace LI {
 	struct WindowProps
 	{
-		std::string Title;
-		unsigned int Width;
-		unsigned int Height;
+		std::string m_Title;
+		unsigned int m_Width;
+		unsigned int m_Height;
 		WindowProps(const std::string& title = "LI Engine",
 			unsigned int width = 1280,
 			unsigned int height = 720)
-			: Title(title), Width(width), Height(height)
+			: m_Title(title), m_Width(width), m_Height(height)
 		{
 		}
 	};

@@ -5,5 +5,5 @@
 #include "Platform/OpenGL/OpenGLRendererAPI.h"
 
 namespace LI {
-	RendererAPI* RenderCommand::m_RendererAPI = new OpenGLRendererAPI;
+	RendererAPI* RenderCommand::s_RendererAPI = new OpenGLRendererAPI;
 }

@@ -59,10 +59,10 @@ namespace LI {
 			glEnableVertexAttribArray(index);
 			glVertexAttribPointer(index,
 				element.GetComponentCount(),
-				ShaderDataTypeToOpenGLBaseType(element.Type),
-				element.Normalized ? GL_TRUE : GL_FALSE,
+				ShaderDataTypeToOpenGLBaseType(element.m_Type),
+				element.m_Normalized ? GL_TRUE : GL_FALSE,
 				layout.GetStride(),
-				(const void*)element.Offset);
+				(const void*)element.m_Offset);
 			index++;
 		}
 		m_VertexBuffers.push_back(vertexBuffer);
