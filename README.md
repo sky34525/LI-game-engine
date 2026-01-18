@@ -87,6 +87,10 @@ Renderer
 采用静态设计，所有成员都是静态的，静态成员SceneData存储场景数据。
 静态设计意味着整个程序共享一份渲染器和场景数据，多个Submit共享同一份SceneData
 
+Timestep
+
+有一个单参数构造函数允许float类型隐式转换为Timestep， 同时有类型转换运算符允许将Timestep隐式转换为float， 可以把 Timestep 对象当作 float 直接使用
+
 
 
 TODO：

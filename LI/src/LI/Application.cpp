@@ -56,10 +56,13 @@ namespace LI{
 	{
 		while (m_Running)
 		{
+			float time = (float)glfwGetTime();
+			Timestep timestep = time - m_LastFrameTime;
+			m_LastFrameTime = time;
 			
 			for (auto& layer : m_LayerStack)
 			{
-				layer->OnUpdate();
+				layer->OnUpdate(timestep);
 			}
 			m_ImGuiLayer->Begin();
 			for (auto& layer : m_LayerStack)

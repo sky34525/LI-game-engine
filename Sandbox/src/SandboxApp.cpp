@@ -68,16 +68,31 @@ public:
 		m_Shader.reset(new LI::Shader(vertexSrc, fragmentSrc));
 	}
 
-	virtual void OnUpdate() override
+	virtual void OnUpdate(LI::Timestep ts) override
 	{
+		if (LI::Input::IsKeyPressed(HZ_KEY_LEFT))
+			m_CameraPosition.x -= m_CameraMoveSpeed * ts;
+		else if (LI::Input::IsKeyPressed(HZ_KEY_RIGHT))
+			m_CameraPosition.x += m_CameraMoveSpeed * ts;
+
+		if (LI::Input::IsKeyPressed(HZ_KEY_UP))
+			m_CameraPosition.y += m_CameraMoveSpeed * ts;
+		else if (LI::Input::IsKeyPressed(HZ_KEY_DOWN))
+			m_CameraPosition.y -= m_CameraMoveSpeed * ts;
+
+		if (LI::Input::IsKeyPressed(HZ_KEY_A))
+			m_CameraRotation += m_CameraRotationSpeed * ts;
+		if (LI::Input::IsKeyPressed(HZ_KEY_D))
+			m_CameraRotation -= m_CameraRotationSpeed * ts;
+
+
 		LI::RenderCommand::SetClearColor({ 0.1f,0.1f,0.1f,1 });
 		LI::RenderCommand::Clear();
 
-		m_Camera.SetPosition({ 0.5f, 0.5f, 0.0f });
-		m_Camera.SetRotation(45.0f);
+		m_Camera.SetPosition(m_CameraPosition);
+		m_Camera.SetRotation(m_CameraRotation);
 
 		LI::Renderer::BeginScene(m_Camera);
-		m_Shader->Bind();
 		LI::Renderer::Submit(m_Shader, m_VertexArray);
 		LI::Renderer::EndScene();
 	}
@@ -88,6 +103,12 @@ private:
 	std::shared_ptr<LI::IndexBuffer> m_IndexBuffer;
 	std::shared_ptr<LI::Shader> m_Shader;
 	LI::OrthographicCamera m_Camera;
+	glm::vec3 m_CameraPosition = { 0.0f, 0.0f, 0.0f };
+	float m_CameraMoveSpeed = 5.0f;
+
+	float m_CameraRotation = 0.0f;
+	float m_CameraRotationSpeed = 180.0f;
+
 };
 
 

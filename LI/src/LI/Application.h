@@ -7,17 +7,14 @@
 #include "Events/ApplicationEvent.h"
 #include "Window.h"
 #include "LI/ImGui/ImGuiLayer.h"
-#include "LI/Renderer/Shader.h"
-#include "LI/Renderer/Buffer.h"
-#include "LI/Renderer/VertexArray.h"
-#include "LI/Renderer/Renderer.h"
-#include "LI/Renderer/OrthographicCamera.h"
+#include "LI/Core/Timestep.h"
+
 
 namespace LI
 {
 	class WindowCloseEvent;
 
-	class LI_API Application {
+	class Application {
 	public:
 
 		virtual ~Application() = default;
@@ -38,6 +35,7 @@ namespace LI
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
+		float m_LastFrameTime = 0.0f;
 
 
 	protected:
