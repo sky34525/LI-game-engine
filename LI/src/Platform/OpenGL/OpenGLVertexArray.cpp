@@ -62,7 +62,7 @@ namespace LI {
 				ShaderDataTypeToOpenGLBaseType(element.m_Type),
 				element.m_Normalized ? GL_TRUE : GL_FALSE,
 				layout.GetStride(),
-				(const void*)element.m_Offset);
+				(const void*)(intptr_t)element.m_Offset);
 			index++;
 		}
 		m_VertexBuffers.push_back(vertexBuffer);
