@@ -37,20 +37,35 @@ public:
 
 		m_SquareVA.reset(LI::VertexArray::Create());
 
-		float squareVertices[5* 4] = {
-			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
+		float squareVertices1[3 * 4] = {
+			-0.5f, -0.5f, 0.0f,
+			 0.5f, -0.5f, 0.0f,
+			 0.5f,  0.5f, 0.0f,
+			-0.5f,  0.5f, 0.0f
 		};
 
-		LI::Ref<LI::VertexBuffer> squareVB;
-		squareVB.reset(LI::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
-		squareVB->SetLayout({
+		float squareVertices2[2 * 4] = {
+			0.0f, 0.0f,
+			1.0f, 0.0f,
+			1.0f, 1.0f,
+			0.0f, 1.0f
+		};
+
+		LI::Ref<LI::VertexBuffer> squareVB1, squareVB2;
+		squareVB1.reset(LI::VertexBuffer::Create(squareVertices1, sizeof(squareVertices1)));
+		squareVB2.reset(LI::VertexBuffer::Create(squareVertices2, sizeof(squareVertices2)));
+
+		squareVB1->SetLayout({
 			{ LI::ShaderDataType::Float3, "a_Position" },
+			});
+
+		squareVB2->SetLayout({
 			{ LI::ShaderDataType::Float2, "a_TexCoord" }
 			});
-		m_SquareVA->AddVertexBuffer(squareVB);
+
+		m_SquareVA->AddVertexBuffer(squareVB1);
+		m_SquareVA->AddVertexBuffer(squareVB2);
+
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
 		std::shared_ptr<LI::IndexBuffer> squareIB;

@@ -119,3 +119,11 @@ diff：
 
 layout(binding = 0) uniform sampler2D u_Texture;通过OpenGL4.2+语法 layout(binding = 0) 自动设置纹理槽位
 
+
+优化：
+
+支持上传VertexBuffer时将静态数据和动态数据分为两个VertexBuffer上传：
+将静态数据与动态数据拆分到不同的 Vertex Buffer，在数据更新频率差异明显的场景下，通常可以显著降低更新成本、减少同步、提升整体渲染性能。
+
+
+
