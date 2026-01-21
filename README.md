@@ -3,6 +3,10 @@ s_ prefix for static fields;
 m_ prefix for member fields.
 
 
+材质：shader + uniform
+shader中getUniformLocation统一获取提高性能
+
+
 Application
 
 单例类
@@ -93,8 +97,25 @@ Timestep
 
 
 
+OpenGLTexture
+
+硬编码了纹理的放大缩小方式
+glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR); 
+glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+缩小时使用双线性过滤
+放大时使用最近邻过滤
+
+
+
+
 TODO：
 ImGui拖动bug（可能是ImGui版本原因，可更换到老版本尝试）或者移除循环  //已解决：未清除渲染缓冲区
 
 Renderer类的作用是什么
+
+
+
+diff：
+
+layout(binding = 0) uniform sampler2D u_Texture;通过OpenGL4.2+语法 layout(binding = 0) 自动设置纹理槽位
 

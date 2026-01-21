@@ -15,6 +15,7 @@ IncludeDir["GLFW"] = "LI/vendor/GLFW/include"
 IncludeDir["Glad"] = "LI/vendor/Glad/include"
 IncludeDir["imGui"] = "LI/vendor/imgui"
 IncludeDir["glm"] = "LI/vendor/glm"
+IncludeDir["stb_image"] = "LI/vendor/stb_image"
 
 startproject "Sandbox"
 
@@ -44,6 +45,8 @@ project "LI"
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/stb_image/**.h",
+		"%{prj.name}/vendor/stb_image/**.cpp",
 		"%{prj.name}/vendor/glm/glm/**.hpp",
 		"%{prj.name}/vendor/glm/glm/**.inl"
 	}
@@ -60,7 +63,8 @@ project "LI"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.imGui}",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb_image}"
 	}
 
 	links
