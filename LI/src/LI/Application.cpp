@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "log.h"
 #include "Input.h"
+#include "LI/Renderer/Renderer.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -20,6 +21,8 @@ namespace LI{
 
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+
+		Renderer::Init();
 
 		auto imGuiLayer = std::make_unique<ImGuiLayer>();
 		m_ImGuiLayer = imGuiLayer.get();

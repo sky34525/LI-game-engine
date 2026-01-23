@@ -182,6 +182,9 @@ public:
 
 		m_Texture = LI::Texture2D::Create("assets/textures/Checkerboard.png");
 
+		m_LILogoTexture = LI::Texture2D::Create("assets/textures/blueL.png");
+
+
 		std::dynamic_pointer_cast<LI::OpenGLShader>(m_TextureShader)->Bind();
 	}
 
@@ -227,6 +230,9 @@ public:
 		m_Texture->Bind(0); //TODO:into Submit
 		LI::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
+		m_LILogoTexture->Bind(0);
+		LI::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
 		// Triangle
 		//LI::Renderer::Submit(m_Shader, m_VertexArray);
 		LI::Renderer::EndScene();
@@ -258,7 +264,7 @@ private:
 
 	glm::vec3 m_SquareColor = { 0.2f, 0.3f, 0.8f };
 
-	LI::Ref<LI::Texture2D> m_Texture;
+	LI::Ref<LI::Texture2D> m_Texture, m_LILogoTexture;
 };
 
 class Sandbox : public LI::Application
