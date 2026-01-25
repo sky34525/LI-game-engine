@@ -8,6 +8,11 @@
 		"Dist"
 	}
 
+		flags
+	{
+		"MultiProcessorCompile"
+	}
+
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
@@ -121,7 +126,9 @@ project "Sandbox"
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
-		"%{prj.name}/**.ini"
+		"%{prj.name}/**.ini",
+		"%{prj.name}/assets/textures/**.png",
+		"%{prj.name}/assets/shaders/**.glsl"
 	}
 
 	includedirs
