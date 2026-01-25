@@ -105,7 +105,15 @@ glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 缩小时使用双线性过滤
 放大时使用最近邻过滤
 
+Shader
+可通过字符串或文件读取的方式构造
+每个Shader必须有一个name方便ShaderLibrary管理
+需要注意的是Create返回的是智能指针，和其他资源返回原始指针不同，因此不能通过reset转移资源
 
+ShaderLibrary
+
+统一管理shader
+通过unordermap存储shader，可根据name索引取出shader
 
 
 TODO：
@@ -119,6 +127,8 @@ Renderer类的作用是什么
 diff：
 
 layout(binding = 0) uniform sampler2D u_Texture;通过OpenGL4.2+语法 layout(binding = 0) 自动设置纹理槽位
+
+shader类中读取的文件必须从两个文件（vertex, fragment）分别读取
 
 
 优化：

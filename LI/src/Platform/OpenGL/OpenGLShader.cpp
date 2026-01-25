@@ -7,7 +7,7 @@
 
 namespace LI {
 
-	OpenGLShader::OpenGLShader(const std::string& vertexfile, const std::string& fragmentfile , bool fromFile)
+	OpenGLShader::OpenGLShader(const std::string& vertexfile, const std::string& fragmentfile)
 	{
 		std::unordered_map<GLenum, std::string> sources;
 		std::string vertexSrc = ReadFile(vertexfile);
@@ -15,9 +15,17 @@ namespace LI {
 		sources[GL_VERTEX_SHADER] = vertexSrc;
 		sources[GL_FRAGMENT_SHADER] = fragmentSrc;
 		Compile(sources);
+
+		// Extract name from filepath
+		auto lastSlash = vertexfile.find_last_of("/\\");
+		lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
+		auto lastDot = vertexfile.rfind('.');
+		auto count = lastDot == std::string::npos ? vertexfile.size() - lastSlash : lastDot - lastSlash;
+		m_Name = vertexfile.substr(lastSlash, count);
 	}
 
-	OpenGLShader::OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc)
+	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
+		: m_Name(name)
 	{
 		std::unordered_map<GLenum, std::string> sources;
 		sources[GL_VERTEX_SHADER] = vertexSrc;
@@ -48,7 +56,9 @@ namespace LI {
 	void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources)
 	{
 		GLuint program = glCreateProgram();
-		std::vector<GLenum> glShaderIDs(shaderSources.size());
+		LI_CORE_ASSERT(shaderSources.size() <= 2, "We only support 2 shaders for now");
+		std::array<GLenum, 2> glShaderIDs;
+		int glShaderIDIndex = 0;
 		for (auto& kv : shaderSources)
 		{
 			GLenum type = kv.first;
@@ -77,7 +87,7 @@ namespace LI {
 			}
 
 			glAttachShader(program, shader);
-			glShaderIDs.push_back(shader);
+			glShaderIDs[glShaderIDIndex++] = shader;
 		}
 
 		m_RendererID = program;

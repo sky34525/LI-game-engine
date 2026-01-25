@@ -72,7 +72,7 @@ public:
 		squareIB.reset(LI::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
 		m_SquareVA->SetIndexBuffer(squareIB);
 
-		m_TextureShader.reset(LI::Shader::CreateFromFiles("assets/shaders/vertex.glsl", "assets/shaders/fragment.glsl"));
+		m_TextureShader = LI::Shader::Create("assets/shaders/vertex.glsl", "assets/shaders/fragment.glsl");
 
 		m_Texture = LI::Texture2D::Create("assets/textures/Checkerboard.png");
 
@@ -84,19 +84,19 @@ public:
 
 	void OnUpdate(LI::Timestep ts) override
 	{
-		if (LI::Input::IsKeyPressed(HZ_KEY_LEFT))
+		if (LI::Input::IsKeyPressed(LI_KEY_LEFT))
 			m_CameraPosition.x -= m_CameraMoveSpeed * ts;
-		else if (LI::Input::IsKeyPressed(HZ_KEY_RIGHT))
+		else if (LI::Input::IsKeyPressed(LI_KEY_RIGHT))
 			m_CameraPosition.x += m_CameraMoveSpeed * ts;
 
-		if (LI::Input::IsKeyPressed(HZ_KEY_UP))
+		if (LI::Input::IsKeyPressed(LI_KEY_UP))
 			m_CameraPosition.y += m_CameraMoveSpeed * ts;
-		else if (LI::Input::IsKeyPressed(HZ_KEY_DOWN))
+		else if (LI::Input::IsKeyPressed(LI_KEY_DOWN))
 			m_CameraPosition.y -= m_CameraMoveSpeed * ts;
 
-		if (LI::Input::IsKeyPressed(HZ_KEY_A))
+		if (LI::Input::IsKeyPressed(LI_KEY_A))
 			m_CameraRotation += m_CameraRotationSpeed * ts;
-		if (LI::Input::IsKeyPressed(HZ_KEY_D))
+		if (LI::Input::IsKeyPressed(LI_KEY_D))
 			m_CameraRotation -= m_CameraRotationSpeed * ts;
 
 		LI::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
@@ -116,8 +116,6 @@ public:
 		m_LILogoTexture->Bind(0);
 		LI::Renderer::Submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
-		// Triangle
-		//LI::Renderer::Submit(m_Shader, m_VertexArray);
 		LI::Renderer::EndScene();
 	}
 
@@ -132,11 +130,11 @@ public:
 	{
 	}
 private:
-	std::shared_ptr<LI::Shader> m_Shader;
-	std::shared_ptr<LI::VertexArray> m_VertexArray;
-
-	std::shared_ptr<LI::Shader> m_TextureShader;
-	std::shared_ptr<LI::VertexArray> m_SquareVA;
+	LI::ShaderLibrary m_ShaderLibrary;
+	LI::Ref<LI::Shader> m_Shader;
+	LI::Ref<LI::VertexArray> m_VertexArray;
+	LI::Ref<LI::Shader> m_TextureShader;
+	LI::Ref<LI::VertexArray> m_SquareVA;
 
 	LI::OrthographicCamera m_Camera;
 	glm::vec3 m_CameraPosition;
