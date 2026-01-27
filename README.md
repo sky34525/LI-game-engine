@@ -115,6 +115,12 @@ ShaderLibrary
 统一管理shader
 通过unordermap存储shader，可根据name索引取出shader
 
+OrthographicCameraController
+
+管理相机类的同时，负责相机的移动缩放，根据windows窗口宽高比调整相机宽高比。
+同时提供GetCamera的接口（Submit提交渲染时需要的参数时camera）
+
+
 
 TODO：
 ImGui拖动bug（可能是ImGui版本原因，可更换到老版本尝试）或者移除循环  //已解决：未清除渲染缓冲区

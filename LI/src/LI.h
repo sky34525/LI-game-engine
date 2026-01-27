@@ -10,6 +10,8 @@
 #include "LI/KeyCodes.h"
 #include "LI/MouseButtonCodes.h"
 
+#include "LI/OrthographicCameraController.h"
+
 #include "LI/EntryPoint.h"
 
 // ---Renderer------------------------
