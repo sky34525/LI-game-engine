@@ -15,6 +15,8 @@ namespace LI {
 		void OnEvent(Event& e);
 		OrthographicCamera& GetCamera() { return m_Camera; }
 		const OrthographicCamera& GetCamera() const { return m_Camera; }
+		float GetZoomLevel() const { return m_ZoomLevel; }
+		void SetZoomLevel(float level) { m_ZoomLevel = level; }
 		//void Resize(float width, float height);
 	private:
 		bool OnMouseScrolled(MouseScrolledEvent& e);
