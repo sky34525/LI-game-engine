@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "LI/Core.h"
+#include "LI/Core/Core.h"
 
 namespace LI {
 

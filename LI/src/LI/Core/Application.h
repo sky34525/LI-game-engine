@@ -2,9 +2,9 @@
 
 #include "Core.h"
 
-#include "LayerStack.h"
-#include "Events/Event.h"
-#include "Events/ApplicationEvent.h"
+#include "LI/Core/LayerStack.h"
+#include "LI/Events/Event.h"
+#include "LI/Events/ApplicationEvent.h"
 #include "Window.h"
 #include "LI/ImGui/ImGuiLayer.h"
 #include "LI/Core/Timestep.h"

@@ -2,7 +2,7 @@
 
 #include "pch.h"
 
-#include "LI/Core.h"
+#include "LI/Core/Core.h"
 #include "LI/Events/Event.h"
 
 namespace LI {

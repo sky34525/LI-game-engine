@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "LI/Core.h"
+#include "LI/Core/Core.h"
 
 #include <string>
 #include <functional>

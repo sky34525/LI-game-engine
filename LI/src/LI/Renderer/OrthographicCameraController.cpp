@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "OrthographicCameraController.h"
 
-#include "LI/Input.h"
-#include "LI/KeyCodes.h"
+#include "LI/Core/Input.h"
+#include "LI/Core/KeyCodes.h"
 
 namespace LI {
 	OrthographicCameraController::OrthographicCameraController(float aspectRatio, bool rotation)

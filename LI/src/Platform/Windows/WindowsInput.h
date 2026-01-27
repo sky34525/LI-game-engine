@@ -1,7 +1,7 @@
 ﻿
 #pragma once
 
-#include "LI/Input.h"
+#include "LI/Core/Input.h"
 
 namespace LI {
 

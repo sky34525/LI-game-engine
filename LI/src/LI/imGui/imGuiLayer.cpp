@@ -5,7 +5,7 @@
 #include "backends/imgui_impl_opengl3.h"
 #include "backends/imgui_impl_glfw.h"
 
-#include "LI/Application.h"
+#include "LI/Core/Application.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 

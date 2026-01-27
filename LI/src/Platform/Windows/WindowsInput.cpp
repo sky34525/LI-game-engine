@@ -1,7 +1,7 @@
 ﻿#include "pch.h"
 #include "WindowsInput.h"
 
-#include "LI/Application.h"
+#include "LI/Core/Application.h"
 #include <GLFW/glfw3.h>
 
 namespace LI {

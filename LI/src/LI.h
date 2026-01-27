@@ -1,18 +1,18 @@
 ﻿#pragma once
 
-#include "LI/Application.h"
-#include "LI/log.h"
+#include "LI/Core/Application.h"
+#include "LI/Core/log.h"
 #include "LI/Core/Timestep.h"
-#include "LI/Layer.h"
+#include "LI/Core/Layer.h"
 #include "LI/imGui/imGuiLayer.h"
 
-#include "LI/Input.h"
-#include "LI/KeyCodes.h"
-#include "LI/MouseButtonCodes.h"
+#include "LI/Core/Input.h"
+#include "LI/Core/KeyCodes.h"
+#include "LI/Core/MouseButtonCodes.h"
 
-#include "LI/OrthographicCameraController.h"
+#include "LI/Renderer/OrthographicCameraController.h"
 
-#include "LI/EntryPoint.h"
+#include "LI/Core/EntryPoint.h"
 
 // ---Renderer------------------------
 #include "LI/Renderer/Renderer.h"
