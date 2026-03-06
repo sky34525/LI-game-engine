@@ -20,6 +20,7 @@ private:
 	// Temp
 	LI::Ref<LI::VertexArray> m_SquareVA;
 	LI::Ref<LI::Shader> m_FlatColorShader;
+	LI::Ref<LI::Texture2D> m_CheckerboardTexture;
 
 	glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 };
