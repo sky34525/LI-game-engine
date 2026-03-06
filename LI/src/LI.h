@@ -12,10 +12,10 @@
 
 #include "LI/Renderer/OrthographicCameraController.h"
 
-#include "LI/Core/EntryPoint.h"
 
 // ---Renderer------------------------
 #include "LI/Renderer/Renderer.h"
+#include "LI/Renderer/Renderer2D.h"
 #include "LI/Renderer/RenderCommand.h"
 		  
 #include "LI/Renderer/Buffer.h"

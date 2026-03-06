@@ -3,12 +3,16 @@
 #include "Renderer.h"
 
 #include "Platform/OpenGL/OpenGLShader.h"
+#include "Renderer2D.h"
 
 namespace LI {
+
+	Scope<Renderer::SceneData> Renderer::s_SceneData = CreateScope<Renderer::SceneData>();
 
 	void Renderer::Init()
 	{
 		RenderCommand::Init();
+		Renderer2D::Init();
 	}
 
 
@@ -16,8 +20,6 @@ namespace LI {
 	{
 		RenderCommand::SetViewport(0, 0, width, height);
 	}
-
-	Renderer::SceneData* Renderer::s_SceneData = new Renderer::SceneData;
 
 	void Renderer::BeginScene(OrthographicCamera& camera)
 	{

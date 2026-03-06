@@ -45,21 +45,21 @@ namespace LI {
 		Add(name, shader);
 	}
 
-	LI::Ref<LI::Shader> ShaderLibrary::Load(const std::string& vertexPath, const std::string& fragmentPath)
+	Ref<Shader> ShaderLibrary::Load(const std::string& vertexPath, const std::string& fragmentPath)
 	{
 		auto shader = Shader::Create(vertexPath, fragmentPath);
 		Add(shader);
 		return shader;
 	}
 
-	LI::Ref<LI::Shader> ShaderLibrary::Load(const std::string& name, const std::string& vertexPath, const std::string& fragmentPath)
+	Ref<Shader> ShaderLibrary::Load(const std::string& name, const std::string& vertexPath, const std::string& fragmentPath)
 	{
 		auto shader = Shader::Create(name, vertexPath, fragmentPath);
 		Add(name, shader);
 		return shader;
 	}
 
-	LI::Ref<LI::Shader> ShaderLibrary::Get(const std::string& name)
+	Ref<Shader> ShaderLibrary::Get(const std::string& name)
 	{
 		LI_CORE_ASSERT(Exists(name), "Shader not found!");
 		return m_Shaders[name];

@@ -14,22 +14,37 @@ namespace LI {
 
 	void OrthographicCameraController::OnUpdate(Timestep ts)
 	{
-		if (LI::Input::IsKeyPressed(LI_KEY_LEFT))
-			m_CameraPosition.x -= m_CameraMoveSpeed * ts;
-		else if (LI::Input::IsKeyPressed(LI_KEY_RIGHT))
-			m_CameraPosition.x += m_CameraMoveSpeed * ts;
+		if (Input::IsKeyPressed(LI_KEY_A))
+		{
+			m_CameraPosition.x -= cos(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
+			m_CameraPosition.y -= sin(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
+		}
+		else if (Input::IsKeyPressed(LI_KEY_D))
+		{
+			m_CameraPosition.x += cos(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
+			m_CameraPosition.y += sin(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
+		}
 
-		if (LI::Input::IsKeyPressed(LI_KEY_UP))
-			m_CameraPosition.y += m_CameraMoveSpeed * ts;
-		else if (LI::Input::IsKeyPressed(LI_KEY_DOWN))
-			m_CameraPosition.y -= m_CameraMoveSpeed * ts;
-
+		if (Input::IsKeyPressed(LI_KEY_W))
+		{
+			m_CameraPosition.x += -sin(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
+			m_CameraPosition.y += cos(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
+		}
+		else if (Input::IsKeyPressed(LI_KEY_S))
+		{
+			m_CameraPosition.x -= -sin(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
+			m_CameraPosition.y -= cos(glm::radians(m_CameraRotation)) * m_CameraMoveSpeed * ts;
+		}
 		if(m_Rotation)
 		{
-			if (LI::Input::IsKeyPressed(LI_KEY_A))
-				m_CameraRotation += m_CameraRotationSpeed * ts;
-			if (LI::Input::IsKeyPressed(LI_KEY_D))
+			if (Input::IsKeyPressed(LI_KEY_E))
 				m_CameraRotation -= m_CameraRotationSpeed * ts;
+
+			if (m_CameraRotation > 180.0f)
+				m_CameraRotation -= 360.0f;
+			else if (m_CameraRotation <= -180.0f)
+				m_CameraRotation += 360.0f;
+
 			m_Camera.SetRotation(m_CameraRotation);
 		}
 

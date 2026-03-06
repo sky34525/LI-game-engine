@@ -30,7 +30,7 @@ namespace LI
 
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
-		bool OnWindowResize(WindowResizeEvent& e);
+		bool OnWindowResize(WindowResizeEvent& e); //Viewport Transformation
 
 		std::unique_ptr<Window> m_Window;
 		ImGuiLayer* m_ImGuiLayer;

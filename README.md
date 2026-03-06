@@ -15,6 +15,7 @@ Application
 
 引擎中的Application是基类，客户端继承实现独立的Application，引擎不知道具体的Application，实现解耦
 
+bool OnWindowResize(WindowResizeEvent& e);  影响渲染管线中的Viewport Transformation阶段
 
 
 Window
@@ -119,6 +120,8 @@ OrthographicCameraController
 
 管理相机类的同时，负责相机的移动缩放，根据windows窗口宽高比调整相机宽高比。
 同时提供GetCamera的接口（Submit提交渲染时需要的参数时camera）
+
+
 
 
 

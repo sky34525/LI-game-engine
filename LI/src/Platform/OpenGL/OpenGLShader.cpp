@@ -83,7 +83,7 @@ namespace LI {
 				glDeleteShader(shader);
 				LI_CORE_ERROR("{0}", infoLog.data());
 				LI_CORE_ASSERT(false, "Shader compilation failure!");
-				break;
+				return;
 			}
 
 			glAttachShader(program, shader);
@@ -117,8 +117,11 @@ namespace LI {
 			LI_CORE_ASSERT(false, "Shader link failure!");
 			return;
 		}
-	for (auto id : glShaderIDs)
-		glDetachShader(program, id);
+		for (auto id : glShaderIDs)
+		{
+			glDetachShader(program, id);
+			glDeleteShader(id);
+		}
 	}
 
 	OpenGLShader::~OpenGLShader()

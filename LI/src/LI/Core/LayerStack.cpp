@@ -8,6 +8,10 @@ namespace LI {
 
 	LayerStack::~LayerStack()
 	{
+		for (auto& layer : m_Layers)
+		{
+			layer->OnDetach();
+		}
 	}
 
 	void LayerStack::PushLayer(std::unique_ptr<Layer> layer)
