@@ -5,7 +5,7 @@
 
 namespace LI {
 
-	class LI_API Input
+	class Input
 	{
 	protected:
 		Input() = default;

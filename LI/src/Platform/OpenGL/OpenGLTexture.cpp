@@ -48,8 +48,8 @@ namespace LI {
 
 		LI_CORE_ASSERT(internalFormat & dataFormat, "Format not supported!");
 
-		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
-		glTextureStorage2D(m_RendererID, 1, internalFormat, m_Width, m_Height);
+		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);															//在 GPU 创建纹理对象，获取 ID   
+		glTextureStorage2D(m_RendererID, 1, internalFormat, m_Width, m_Height);                                     //在GPU显存分配存储空间
 
 		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -57,7 +57,7 @@ namespace LI {
 		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, dataFormat, GL_UNSIGNED_BYTE, data);
+		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, dataFormat, GL_UNSIGNED_BYTE, data);         //将CPU内存中的 data 复制到 GPU 显存
 
 		stbi_image_free(data);
 	}
@@ -74,6 +74,7 @@ namespace LI {
 		glDeleteTextures(1, &m_RendererID);
 	}
 
+	//将纹理绑定到对应的槽位
 	void OpenGLTexture2D::Bind(uint32_t slot) const
 	{
 		glBindTextureUnit(slot, m_RendererID);

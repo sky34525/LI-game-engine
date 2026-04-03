@@ -6,7 +6,7 @@
 
 namespace LI {
 
-	class LI_API KeyEvent : public Event
+	class KeyEvent : public Event
 	{
 	public:
 		inline int GetKeyCode() const { return m_KeyCode; }
@@ -18,7 +18,7 @@ namespace LI {
 		int m_KeyCode;
 	};
 
-	class LI_API KeyPressedEvent : public KeyEvent
+	class KeyPressedEvent : public KeyEvent
 	{
 	public:
 		KeyPressedEvent(int keycode, int repeatCount)
@@ -38,7 +38,7 @@ namespace LI {
 		int m_RepeatCount;
 	};
 
-	class LI_API KeyReleasedEvent : public KeyEvent
+	class KeyReleasedEvent : public KeyEvent
 	{
 	public:
 		KeyReleasedEvent(int keycode)
@@ -52,7 +52,7 @@ namespace LI {
 		EVENT_CLASS_TYPE(KeyReleased)
 	};
 
-	class LI_API KeyTypedEvent : public KeyEvent
+	class KeyTypedEvent : public KeyEvent
 	{	
 	public:
 		KeyTypedEvent(int keycode)

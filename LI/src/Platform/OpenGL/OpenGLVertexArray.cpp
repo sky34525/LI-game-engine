@@ -8,17 +8,17 @@ namespace LI {
 	{
 		switch (type)
 		{
-		case LI::ShaderDataType::Float:    return GL_FLOAT;
-		case LI::ShaderDataType::Float2:   return GL_FLOAT;
-		case LI::ShaderDataType::Float3:   return GL_FLOAT;
-		case LI::ShaderDataType::Float4:   return GL_FLOAT;
-		case LI::ShaderDataType::Mat3:     return GL_FLOAT;
-		case LI::ShaderDataType::Mat4:     return GL_FLOAT;
-		case LI::ShaderDataType::Int:      return GL_INT;
-		case LI::ShaderDataType::Int2:     return GL_INT;
-		case LI::ShaderDataType::Int3:     return GL_INT;
-		case LI::ShaderDataType::Int4:     return GL_INT;
-		case LI::ShaderDataType::Bool:     return GL_BOOL;
+		case ShaderDataType::Float:    return GL_FLOAT;
+		case ShaderDataType::Float2:   return GL_FLOAT;
+		case ShaderDataType::Float3:   return GL_FLOAT;
+		case ShaderDataType::Float4:   return GL_FLOAT;
+		case ShaderDataType::Mat3:     return GL_FLOAT;
+		case ShaderDataType::Mat4:     return GL_FLOAT;
+		case ShaderDataType::Int:      return GL_INT;
+		case ShaderDataType::Int2:     return GL_INT;
+		case ShaderDataType::Int3:     return GL_INT;
+		case ShaderDataType::Int4:     return GL_INT;
+		case ShaderDataType::Bool:     return GL_BOOL;
 		}
 
 		LI_CORE_ASSERT(false, "Unknown ShaderDataType!");

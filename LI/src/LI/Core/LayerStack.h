@@ -7,7 +7,7 @@
 #include <memory>
 
 namespace LI {
-	class LI_API LayerStack
+	class LayerStack
 	{
 	public:
 		LayerStack();

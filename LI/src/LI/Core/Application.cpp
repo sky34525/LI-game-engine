@@ -12,12 +12,12 @@ namespace LI{
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
-	Application* Application::s_Instance = nullptr;
+	Application* Application::s_Instance = nullptr;								//s_Instance指向最终创建的对象
 
 	Application::Application()
 	{
-		LI_CORE_ASSERT(!s_Instance, "Application alreade exists!");
-		s_Instance = this;
+		LI_CORE_ASSERT(!s_Instance, "Application alreade exists!");				//通过断言保证只有一个实例
+		s_Instance = this;														//子类构造时会先调用Application的构造函数，此时this指向子类
 
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
@@ -27,7 +27,6 @@ namespace LI{
 		auto imGuiLayer = std::make_unique<ImGuiLayer>();
 		m_ImGuiLayer = imGuiLayer.get();
 		PushOverlay(std::move(imGuiLayer));
-
 	}
 
 	void Application::PushLayer(std::unique_ptr<Layer> layer)

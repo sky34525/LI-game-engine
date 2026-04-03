@@ -5,7 +5,7 @@
 #include "spdlog/sinks/stdout_color_sinks.h"
 
 namespace LI {
-	class LI_API log
+	class log
 	{
 	public:
 		static void Init();

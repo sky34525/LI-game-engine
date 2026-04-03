@@ -5,7 +5,7 @@
 
 
 namespace LI {
-	class LI_API MouseMovedEvent : public Event
+	class MouseMovedEvent : public Event
 	{
 	public:
 		MouseMovedEvent(float x, float y)
@@ -26,7 +26,7 @@ namespace LI {
 		float m_MouseX, m_MouseY;
 	};
 
-	class LI_API MouseScrolledEvent : public Event
+	class MouseScrolledEvent : public Event
 	{
 	public:
 		MouseScrolledEvent(float xoffset, float yoffset)
@@ -48,7 +48,7 @@ namespace LI {
 		float m_Xoffset, m_Yoffset;
 	};
 
-	class LI_API MouseButtonEvent : public Event
+	class MouseButtonEvent : public Event
 	{
 	public:
 		inline int GetMouseButton() const { return m_Button;}
@@ -60,7 +60,7 @@ namespace LI {
 		int m_Button;
 	};
 
-	class LI_API MouseButtonPressedEvent : public MouseButtonEvent
+	class MouseButtonPressedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonPressedEvent(int button)
@@ -76,7 +76,7 @@ namespace LI {
 	};
 
 
-	class LI_API MouseButtonReleasedEvent : public MouseButtonEvent
+	class MouseButtonReleasedEvent : public MouseButtonEvent
 	{
 	public:
 		MouseButtonReleasedEvent(int button)

@@ -9,6 +9,11 @@
 #include "LI/ImGui/ImGuiLayer.h"
 #include "LI/Core/Timestep.h"
 
+//Application通过将构造函数设为protected，和一个static Application*实现单例。但是和常规的懒汉和饿汉式单例都有区别
+//和饿汉式单例的区别：
+//不在静态初始化阶段构造，静态初始化阶段将static Application* = nullptr
+//不使用懒汉式的原因：
+//EntryPoint.h负责Application的生命周期管理。
 
 namespace LI
 {
