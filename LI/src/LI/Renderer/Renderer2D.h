@@ -14,13 +14,13 @@ namespace LI {
 		static void EndScene();
 		static void Flush();
 
-		// 纯色 quad
-		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
-		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
+		// 纯色 quad（rotation 单位：弧度，默认 0）
+		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color, float rotation = 0.0f);
+		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, float rotation = 0.0f);
 
-		// 纹理 quad（tilingFactor 控制贴图重复次数，默认 1.0）
-		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor = 1.0f);
-		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor = 1.0f);
+		// 纹理 quad（rotation 单位：弧度，默认 0）
+		static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor = 1.0f, float rotation = 0.0f);
+		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor = 1.0f, float rotation = 0.0f);
 
 		// 统计信息（用于性能调试）
 		struct Statistics

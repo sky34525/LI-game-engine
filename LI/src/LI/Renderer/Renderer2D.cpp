@@ -183,7 +183,7 @@ namespace LI {
 	// -------------------------------------------------------
 	// DrawQuad 内部实现（vec3 版本，其他重载都转发到这里）
 	// -------------------------------------------------------
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
+	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, float rotation)
 	{
 		// 缓冲区满了就先提交一次
 		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
@@ -195,6 +195,7 @@ namespace LI {
 
 		// 计算变换矩阵，将本地顶点坐标变换到世界坐标
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+			* (rotation != 0.0f ? glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f }) : glm::mat4(1.0f))
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
 		// 写入 4 个顶点到 CPU 缓冲区
@@ -212,12 +213,12 @@ namespace LI {
 		s_Data.Stats.QuadCount++;
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
+	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color, float rotation)
 	{
-		DrawQuad({ position.x, position.y, 0.0f }, size, color);
+		DrawQuad({ position.x, position.y, 0.0f }, size, color, rotation);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor)
+	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor, float rotation)
 	{
 		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
 			FlushAndReset();
@@ -248,6 +249,7 @@ namespace LI {
 		constexpr glm::vec2 texCoords[] = { {0,0}, {1,0}, {1,1}, {0,1} };
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+			* (rotation != 0.0f ? glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f }) : glm::mat4(1.0f))
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
 		for (int i = 0; i < 4; i++)
@@ -264,9 +266,9 @@ namespace LI {
 		s_Data.Stats.QuadCount++;
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor)
+	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture2D>& texture, float tilingFactor, float rotation)
 	{
-		DrawQuad({ position.x, position.y, 0.0f }, size, texture, tilingFactor);
+		DrawQuad({ position.x, position.y, 0.0f }, size, texture, tilingFactor, rotation);
 	}
 
 	Renderer2D::Statistics Renderer2D::GetStats()
