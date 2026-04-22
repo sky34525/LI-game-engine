@@ -271,6 +271,60 @@ namespace LI {
 		DrawQuad({ position.x, position.y, 0.0f }, size, texture, tilingFactor, rotation);
 	}
 
+	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<SubTexture2D>& subTexture, float rotation)
+	{
+		if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
+			FlushAndReset();
+
+		const Ref<Texture2D>& texture  = subTexture->GetTexture();
+		const glm::vec2*      texCoords = subTexture->GetTexCoords();
+
+		float textureIndex = 0.0f;
+		for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
+		{
+			if (s_Data.TextureSlots[i].get() == texture.get())
+			{
+				textureIndex = (float)i;
+				break;
+			}
+		}
+
+		if (textureIndex == 0.0f)
+		{
+			if (s_Data.TextureSlotIndex >= Renderer2DData::MaxTextureSlots)
+				FlushAndReset();
+
+			textureIndex = (float)s_Data.TextureSlotIndex;
+			s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
+			s_Data.TextureSlotIndex++;
+		}
+
+		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
+		constexpr float tilingFactor = 1.0f;
+
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+			* (rotation != 0.0f ? glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f }) : glm::mat4(1.0f))
+			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+
+		for (int i = 0; i < 4; i++)
+		{
+			s_Data.QuadVertexBufferPtr->Position     = transform * s_Data.QuadVertexPositions[i];
+			s_Data.QuadVertexBufferPtr->Color        = color;
+			s_Data.QuadVertexBufferPtr->TexCoord     = texCoords[i];
+			s_Data.QuadVertexBufferPtr->TexIndex     = textureIndex;
+			s_Data.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+			s_Data.QuadVertexBufferPtr++;
+		}
+
+		s_Data.QuadIndexCount += 6;
+		s_Data.Stats.QuadCount++;
+	}
+
+	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<SubTexture2D>& subTexture, float rotation)
+	{
+		DrawQuad({ position.x, position.y, 0.0f }, size, subTexture, rotation);
+	}
+
 	Renderer2D::Statistics Renderer2D::GetStats()
 	{
 		return s_Data.Stats;

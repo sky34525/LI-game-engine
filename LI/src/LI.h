@@ -22,6 +22,7 @@
 #include "LI/Renderer/Shader.h"
 #include "LI/Renderer/VertexArray.h"
 #include "LI/Renderer/Texture.h"
+#include "LI/Renderer/SubTexture2D.h"
 		  
 #include "LI/Renderer/OrthographicCamera.h"
 // -----------------------------------
